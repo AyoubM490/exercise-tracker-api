@@ -25,6 +25,10 @@
     "morgan": "1.10.0"
   },
   "devDependencies": {
+    "babel-eslint": "10.x",
+    "eslint": "7.x",
+    "eslint-config-airbnb-base": "14.x",
+    "eslint-plugin-import": "2.x",
     "nodemon": "2.0.20"
   }
 }
