@@ -18,7 +18,10 @@ const Exercise = mongoose.model("exercises", exerciseSchema);
 module.exports = {
   getExercises: () => Exercise.find(),
   getExercise: (exerciseId) => Exercise.findById(exerciseId),
-  addExercise: (exercise) => Exercise.create(exercise),
+  addExercise: (exercise) => {
+    const newExercise = new Exercise(exercise);
+    return newExercise.save();
+  },
   deleteExercise: (exerciseId) => Exercise.findByIdAndDelete(exerciseId),
   Exercise,
 };

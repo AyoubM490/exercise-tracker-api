@@ -1,83 +1,88 @@
-const { MongoClient } = require('mongodb');
+const mockingoose = require("mockingoose");
+const { Exercise } = require("./exercise.model");
+const {
+  getExercises,
+  getExercise,
+  addExercise,
+  deleteExercise,
+} = require("./exercise.model");
 
-require('dotenv').config();
+describe("Exercise service", () => {
+  const invalidExercise = {};
 
-describe('Exercise Model tests', () => {
-  let connection;
-  let collection;
-  let db;
+  it("Should throw validation error", async () => {
+    const exercise = new Exercise(invalidExercise);
+    await expect(exercise.validate()).rejects.toThrow();
+  });
 
-  beforeAll(async () => {
-    connection = await new MongoClient(process.env.ATLAS_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+  describe("getExercises", () => {
+    it("Should return all exercises", async () => {
+      const exercises = [
+        {
+          username: "test",
+          description: "test",
+          duration: 10,
+          date: new Date(),
+        },
+        {
+          username: "test2",
+          description: "test2",
+          duration: 20,
+          date: new Date(),
+        },
+      ];
+
+      mockingoose(Exercise).toReturn(exercises, "find");
+
+      const result = await getExercises();
+      expect(result[0].username).toBe("test");
     });
-    db = await connection.db('test');
-    collection = db.collection('exercisesTest');
   });
 
-  afterAll(async () => {
-    await connection.close();
+  describe("getExercise", () => {
+    it("Should return an exercise", async () => {
+      const exercise = {
+        username: "test",
+        description: "test",
+        duration: 10,
+        date: new Date(),
+      };
+
+      mockingoose(Exercise).toReturn(exercise, "findOne");
+
+      const result = await getExercise("123");
+      expect(result.username).toBe("test");
+    });
   });
 
-  afterEach(async () => {
-    await collection.deleteMany();
+  describe("addExercise", () => {
+    it("Should add an exercise", async () => {
+      const exercise = {
+        username: "test",
+        description: "test",
+        duration: 10,
+        date: new Date(),
+      };
+
+      const newExercise = await addExercise(exercise);
+
+      expect(newExercise.username).toBe("test");
+    });
   });
 
-  it('should insert an exercise into collection', async () => {
-    const exercisesTest = db.collection('exercisesTest');
+  describe("deleteExercise", () => {
+    it("Should delete an exercise", async () => {
+      const exercise = {
+        username: "test",
+        description: "test",
+        duration: 10,
+        date: new Date(),
+      };
 
-    const mockExercise = {
-      username: 'test',
-      description: 'test',
-      duration: 1,
-      date: new Date(),
-    };
-    await exercisesTest.insertOne(mockExercise);
+      mockingoose(Exercise).toReturn(exercise, "findOneAndDelete");
 
-    const insertedExercise = await exercisesTest.findOne({ username: 'test' });
-    expect(insertedExercise).toEqual(mockExercise);
-  });
-
-  it('should delete an exercise from collection', async () => {
-    const exercisesTest = db.collection('exercisesTest');
-
-    const mockExercise = {
-      username: 'test',
-      description: 'test',
-      duration: 1,
-      date: new Date(),
-    };
-    await exercisesTest.insertOne(mockExercise);
-
-    const insertedExercise = await exercisesTest.findOne({ username: 'test' });
-    expect(insertedExercise).toEqual(mockExercise);
-
-    await exercisesTest.deleteOne({ username: 'test' });
-    const deletedExercise = await exercisesTest.findOne({ username: 'test' });
-    expect(deletedExercise).toBeNull();
-  });
-
-  it('Should find all exercises in collection', async () => {
-    const exercisesTest = db.collection('exercisesTest');
-
-    const mockExercise1 = {
-      username: 'test1',
-      description: 'test1',
-      duration: 1,
-      date: new Date(),
-    };
-
-    const mockExercise2 = {
-      username: 'test2',
-      description: 'test2',
-      duration: 2,
-      date: new Date(),
-    };
-
-    await exercisesTest.insertMany([mockExercise1, mockExercise2]);
-
-    const allExercises = await exercisesTest.find().toArray();
-    expect(allExercises.length).toBe(2);
+      const result = await deleteExercise("123");
+      expect(result.username).toBe("test");
+    });
   });
 });
