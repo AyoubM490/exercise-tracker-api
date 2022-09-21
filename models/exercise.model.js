@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { Schema } = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = require("mongoose");
 
 const exerciseSchema = new Schema(
   {
@@ -10,14 +10,15 @@ const exerciseSchema = new Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-const Exercise = mongoose.model('exercises', exerciseSchema);
+const Exercise = mongoose.model("exercises", exerciseSchema);
 
 module.exports = {
   getExercises: () => Exercise.find(),
   getExercise: (exerciseId) => Exercise.findById(exerciseId),
   addExercise: (exercise) => Exercise.create(exercise),
   deleteExercise: (exerciseId) => Exercise.findByIdAndDelete(exerciseId),
+  Exercise,
 };

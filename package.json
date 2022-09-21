@@ -32,6 +32,7 @@
     "eslint-config-airbnb-base": "14.x",
     "eslint-plugin-import": "2.x",
     "jest": "29.0.3",
+    "mockingoose": "2.15.2",
     "nodemon": "2.0.20",
     "supertest": "6.2.4"
   }
