@@ -17,7 +17,9 @@
     "import/extensions": [ 1, {
       "js": "always", "json": "always"
     }],
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "off"
   },
   "ignorePatterns": [
     "dist/",
