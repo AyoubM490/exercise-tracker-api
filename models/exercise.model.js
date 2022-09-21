@@ -13,6 +13,11 @@ const exerciseSchema = new Schema(
   },
 );
 
-const Exercise = mongoose.model('Exercise', exerciseSchema);
+const Exercise = mongoose.model('exercises', exerciseSchema);
 
-module.exports = Exercise;
+module.exports = {
+  getExercises: () => Exercise.find(),
+  getExercise: (exerciseId) => Exercise.findById(exerciseId),
+  addExercise: (exercise) => Exercise.create(exercise),
+  deleteExercise: (exerciseId) => Exercise.findByIdAndDelete(exerciseId),
+};
