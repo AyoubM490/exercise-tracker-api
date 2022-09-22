@@ -1,20 +1,20 @@
-const express = require("express");
-const request = require("supertest");
+const express = require('express');
+const request = require('supertest');
 
-require("dotenv").config();
+require('dotenv').config();
 
 function createApp() {
   const app = express();
-  app.get("/", (req, res) => {
-    res.send("Hello World!");
+  app.get('/', (req, res) => {
+    res.send('Hello World!');
   });
   return app;
 }
 
-describe("GET /", () => {
-  it("should return 200 OK", () => {
+describe('GET /', () => {
+  it('should return 200 OK', () => {
     process.env.SERVER = true;
     const app = createApp();
-    request(app).get("/").expect(200);
+    request(app).get('/').expect(200);
   });
 });
