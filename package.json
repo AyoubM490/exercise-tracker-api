@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --coverage --coverageReporters=text --forceExit"
+    "test": "NODE_ENV=test jest --coverage --coverageReporters=text --forceExit",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
