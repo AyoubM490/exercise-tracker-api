@@ -19,7 +19,8 @@
     }],
     "import/no-unresolved": "off",
     "no-underscore-dangle": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-undef": "off"
   },
   "ignorePatterns": [
     "dist/",
